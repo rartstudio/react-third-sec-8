@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React,{useState} from 'react';
+
 import './App.css';
+import NewUser from './components/NewUser';
+import ListUser from './components/ListUser';
+
+const DUMMY_DATA= [{userName: 'dada', userAge: 23}];
 
 function App() {
+
+  const [data, setData] = useState(DUMMY_DATA);
+
+  const sendDataHandler = (data) => {
+    setData(prevData => {
+      return [data, ...prevData];
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="row">
+        <div className="col-lg-4 "></div>
+        <div className="col-lg-4 ">
+          <NewUser onSendData={sendDataHandler}/>
+          <ListUser items={data}/>
+        </div>
+        <div className="col-lg-4 "></div>
+      </div>
     </div>
   );
 }
